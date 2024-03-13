@@ -8,6 +8,10 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      backgroundImage: {
+        slider: "linear-gradient(to top, #222 5%, transparent)",
+        thumbnails: "linear-gradient(to top, #222 2%, transparent)",
+      },
       colors: {
         primary: "#62cbc9",
         "gray-light": "#232028",
