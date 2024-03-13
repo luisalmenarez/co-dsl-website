@@ -1,6 +1,5 @@
 import { Logo } from "@/components/shared/Logo";
-import Link from "next/link";
-import { ItemMenu } from "./ItemMenu";
+import { ItemMenu } from "@/components/ui/ItemMenu";
 
 export const Header = () => {
   return (

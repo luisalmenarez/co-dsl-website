@@ -1,3 +1,11 @@
+import { ItemSlider } from "@/components/ui/ItemSlider";
+
 export default function Home() {
-  return <h1></h1>;
+  return (
+    <div className="h-screen relative">
+      <ul>
+        <ItemSlider />
+      </ul>
+    </div>
+  );
 }
