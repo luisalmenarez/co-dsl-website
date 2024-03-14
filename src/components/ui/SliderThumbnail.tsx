@@ -5,15 +5,14 @@ interface SliderThumbailProps {
   itemActive: number;
   id: number;
   image: string;
-  name: string;
   onClick: () => void;
 }
 
-export const SliderThumbail = ({
+export const SliderThumbnail = ({
   itemActive,
   id,
   image,
-  name,
+
   onClick,
 }: SliderThumbailProps) => {
   return (
@@ -39,9 +38,7 @@ export const SliderThumbail = ({
         className={cn(
           "absolute top-auto right-3 bottom-5 left-3 z-10 translate-y-8 blur-xl "
         )}
-      >
-        <h2 className="line-clamp-1 font-bold text-start"> {name} </h2>
-      </div>
+      ></div>
     </li>
   );
 };
