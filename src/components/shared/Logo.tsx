@@ -4,7 +4,8 @@ export const Logo = () => {
   return (
     <Link
       href={"/"}
-      className="uppercase font-black text-white flex items-center text-lg">
+      className="uppercase font-black text-white flex items-center text-lg"
+    >
       <span className="bg-primary text-black size-8 flex items-center justify-center rounded mr-px">
         CO
       </span>
