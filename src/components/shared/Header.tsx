@@ -1,8 +1,6 @@
 "use client";
-
 import { Logo } from "@/components/shared/Logo";
 import { useState } from "react";
-import { Button } from "../ui/Button";
 import { Menu } from "../ui/Menu";
 
 export const Header = () => {

@@ -1,6 +1,7 @@
 import { Button } from "../Button";
+import { Nav } from "../Nav";
 import styles from "./style.module.css";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 
 interface ButtonProps {
   isActive: boolean;
@@ -37,7 +38,9 @@ export const Menu: React.FC<ButtonProps> = ({ isActive, setIsActive }) => {
         variants={variants}
         animate={isActive ? "open" : "closed"}
         initial="closed"
-      ></motion.article>
+      >
+        <AnimatePresence>{isActive && <Nav />}</AnimatePresence>
+      </motion.article>
       <Button isActive={isActive} setIsActive={setIsActive} />
     </>
   );

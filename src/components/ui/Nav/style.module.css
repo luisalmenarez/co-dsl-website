@@ -1,0 +1,16 @@
+.nav {
+  height: 100%;
+  padding: 100px 40px 50px 40px;
+  box-sizing: border-box;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.body a {
+  color: black;
+  font-size: 45px;
+}
