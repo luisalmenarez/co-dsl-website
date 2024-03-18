@@ -1,8 +1,7 @@
 import { Button } from "@/components/ui/Button";
 import { Nav } from "@/components/ui/Nav";
-import styles from "./style.module.css";
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import styles from "./style.module.css";
 
 interface ButtonProps {
   isActive: boolean;
@@ -32,17 +31,6 @@ const variants = {
 };
 
 export const Menu: React.FC<ButtonProps> = ({ isActive, setIsActive }) => {
-  const [isOverlayVisible, setIsOverlayVisible] = useState(false);
-
-  useEffect(() => {
-    if (isActive) setIsActive(false);
-    setIsOverlayVisible(isActive);
-
-    return () => {
-      setIsOverlayVisible(false);
-    };
-  }, []);
-
   return (
     <>
       <motion.article
@@ -51,19 +39,11 @@ export const Menu: React.FC<ButtonProps> = ({ isActive, setIsActive }) => {
         animate={isActive ? "open" : "closed"}
         initial="closed"
       >
-        <AnimatePresence>{isActive && <Nav />}</AnimatePresence>
+        <AnimatePresence>
+          {isActive && <Nav isActive={isActive} setIsActive={setIsActive} />}
+        </AnimatePresence>
       </motion.article>
       <Button isActive={isActive} setIsActive={setIsActive} />
-
-      {isOverlayVisible && (
-        <div
-          className={styles.overlay}
-          onClick={() => {
-            setIsActive(false);
-            setIsOverlayVisible(false);
-          }}
-        />
-      )}
     </>
   );
 };
