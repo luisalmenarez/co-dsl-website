@@ -1,16 +1,34 @@
 .nav {
-  height: 100%;
-  padding: 100px 40px 50px 40px;
-  box-sizing: border-box;
-}
-
-.body {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  justify-content: space-between;
+  padding: 100px 40px 50px 40px;
+  height: 100%;
 }
 
-.body a {
+.nav .body {
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+}
+
+.nav .body .linkContainer {
+  perspective-origin: bottom;
+}
+
+.nav .body a {
+  text-decoration: none;
   color: black;
-  font-size: 45px;
+  font-size: 46px;
+}
+
+.nav .footer {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.nav .footer a {
+  width: 50%;
+  color: black;
+  margin-top: 5px;
 }

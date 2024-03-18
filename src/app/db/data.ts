@@ -60,3 +60,18 @@ export const thumbnails = [
     image: "/images/5.jpg",
   },
 ];
+
+export const Links = [
+  { href: "/", title: "Projects" },
+  { href: "/", title: "Agency" },
+  { href: "/", title: "Expertise" },
+  { href: "/", title: "Careers" },
+  { href: "/", title: "Contact" },
+];
+
+export const FooterLink = [
+  { href: "/other", title: "Facebook" },
+  { href: "/asdadsf", title: "LinkedIn" },
+  { href: "/dsds", title: "Instagram" },
+  { href: "/sdsdsd", title: "Twitter" },
+];
