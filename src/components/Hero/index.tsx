@@ -1,9 +1,11 @@
+import { Carousel } from "./Carousel";
 import { HeroCarousel } from "./HeroCarousel";
 
 export const Hero = () => {
   return (
-    <div className="h-screen relative">
-      <HeroCarousel />
+    <div className="w-full relative">
+      {/* <HeroCarousel /> */}
+      <Carousel />
     </div>
   );
 };

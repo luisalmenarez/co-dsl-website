@@ -13,8 +13,8 @@ const config: Config = {
         thumbnails: "linear-gradient(to top, #222 2%, transparent)",
       },
       colors: {
-        primary: "#62cbc9",
-        "gray-light": "#232028",
+        primary: "#00ffff",
+        secondary: "#062A30",
         "yellow-hover": "#FFB703",
         "color-contrast": "#A0AAB2",
       },
