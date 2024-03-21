@@ -1,71 +1,137 @@
 import "swiper/css";
 import "swiper/css/pagination";
-import Image from "next/image";
 import styles from "./style.module.css";
+import Image from "next/image";
+import gsap from "gsap";
+
+import { useState, useEffect, useRef } from "react";
+import { Autoplay, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination, Autoplay } from "swiper/modules";
-import { gsap } from "gsap";
+import { carouselItems } from "@/app/db/data";
+import { Swiper as SwiperType } from "swiper";
+import { motion } from "framer-motion";
 
 export const NewCarousel = () => {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const isFirstRender = useRef(true);
+
+  const handleSlideChange = (swiper: SwiperType) => {
+    setCurrentImageIndex(swiper.realIndex);
+  };
+
+  useEffect(() => {
+    if (!isFirstRender.current) {
+      const tl = gsap.timeline({ repeat: 0 });
+      tl.from(`#text-${currentImageIndex}`, {
+        duration: 0.75,
+        x: 150,
+        stagger: 0.2,
+      });
+
+      gsap.to(`#text-${currentImageIndex}`, {
+        duration: 0,
+        x: 0,
+      });
+    } else {
+      isFirstRender.current = false;
+    }
+  }, [currentImageIndex]);
+
+  useEffect(() => {
+    const tl = gsap.timeline({ repeat: 0 });
+    tl.from(`#brand-${currentImageIndex}, #desc-${currentImageIndex}`, {
+      duration: 0.75,
+      x: 150,
+      opacity: 0,
+      stagger: 0.2,
+    });
+
+    gsap.to(`#brand-${currentImageIndex}, #desc-${currentImageIndex}`, {
+      duration: 0,
+      x: 0,
+      opacity: 1,
+    });
+
+    isFirstRender.current = false;
+  }, [currentImageIndex]);
+
   return (
     <section className={styles.carousel}>
       <Swiper
+        className="grid place-items-center h-screen"
         effect="none"
         slidesPerView={1}
         allowTouchMove={false}
         loop={true}
         autoplay={{
           delay: 5000,
-          pauseOnMouseEnter: true,
           disableOnInteraction: false,
         }}
         pagination={{ clickable: true }}
         navigation={true}
         modules={[Pagination, Autoplay]}
+        onSlideChange={handleSlideChange}
       >
-        <SwiperSlide>
-          <div className={styles.content}>
-            <span
-              className={`${styles["large-text"]} ${styles.before} ${styles.recreation}`}
+        {carouselItems.map((item, index) => (
+          <SwiperSlide key={item.id}>
+            <div
+              className={`${styles.content} ${
+                currentImageIndex === index
+                  ? styles["carousel-transition"]
+                  : " "
+              }`}
+              style={{
+                backgroundImage: `linear-gradient(0deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(${item.image})`,
+                backgroundPosition: "center center",
+                backgroundSize: "cover",
+              }}
             >
-              ADAPTABILIDAD
-            </span>
-
-            <figure className={styles["image-wrap"]}>
-              <div className="absolute bg-black bg-opacity-30 left-0 top-0 w-full h-full z-50" />
-              <Image
-                src="/images/1.jpg"
-                alt="Imagen"
-                layout="fill"
-                objectFit="cover"
-              />
-            </figure>
-            <span className={`${styles["large-text"]} ${styles.after}`}>
-              ADAPTABILIDAD
-            </span>
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <div className={styles.content}>
-            <span
-              className={`${styles["large-text"]} ${styles.before} ${styles.recreation}`}
-            >
-              EFICIENCIA
-            </span>
-            <figure className={styles["image-wrap"]}>
-              <Image
-                src="/images/2.jpg"
-                alt="Imagen"
-                layout="fill"
-                objectFit="cover"
-                className="w-full h-full"
-              />
-            </figure>
-            <span className={`${styles["large-text"]} ${styles.after}`}>
-              EFICIENCIA
-            </span>
-          </div>
-        </SwiperSlide>
+              <motion.article
+                initial={{ x: 150, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ duration: 0.75 }}
+                id={`brand-${index}`}
+                className="absolute z-10 top-1/3"
+              >
+                <p className="uppercase tracking-[15px] text-primary font-bold text-4xl">
+                  {item.brand}
+                </p>
+              </motion.article>
+              <span
+                id={`text-${index}`}
+                className={`${styles["large-text"]} ${styles.before}`}
+              >
+                {item.name}
+              </span>
+              <figure className={styles["image-wrap"]}>
+                <div className="absolute bg-black bg-opacity-25 left-0 top-0 w-full h-full z-50" />
+                <Image
+                  src={item.image}
+                  alt={item.name}
+                  fill
+                  className="w-full h-full object-cover"
+                />
+              </figure>
+              <span
+                id={`text-${index}`}
+                className={`${styles["large-text"]} ${styles.after}`}
+              >
+                {item.name}
+              </span>
+              <motion.article
+                initial={{ x: 150, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ duration: 0.75 }}
+                id={`desc-${index}`}
+                className="absolute w-1/2 top-[55%] z-10"
+              >
+                <p className="desc text-2xl text-center font-semibold text-gray-200">
+                  {item.desc}
+                </p>
+              </motion.article>
+            </div>
+          </SwiperSlide>
+        ))}
       </Swiper>
     </section>
   );

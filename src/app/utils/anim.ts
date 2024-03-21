@@ -58,3 +58,8 @@ export const hoverItems = {
     x: 0,
   },
 };
+
+export const slideInAnimation = {
+  hidden: { x: 150 },
+  visible: { x: 0, transition: { duration: 0.75 } },
+};
