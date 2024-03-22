@@ -9,7 +9,6 @@ import { Autoplay, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { carouselItems } from "@/app/db/data";
 import { Swiper as SwiperType } from "swiper";
-import { motion } from "framer-motion";
 
 export const NewCarousel = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -21,8 +20,8 @@ export const NewCarousel = () => {
 
   useEffect(() => {
     if (!isFirstRender.current) {
-      const tl = gsap.timeline({ repeat: 0 });
-      tl.from(`#text-${currentImageIndex}`, {
+      const tlText = gsap.timeline({ repeat: 0 });
+      tlText.from(`#text-${currentImageIndex}`, {
         duration: 0.75,
         x: 150,
         stagger: 0.2,
@@ -32,27 +31,24 @@ export const NewCarousel = () => {
         duration: 0,
         x: 0,
       });
+
+      const tlBrandDesc = gsap.timeline({ repeat: 0 });
+      tlBrandDesc.from(
+        `#brand-${currentImageIndex}, #desc-${currentImageIndex}`,
+        {
+          duration: 0.75,
+          x: 150,
+          stagger: 0.2,
+        }
+      );
+
+      gsap.to(`#brand-${currentImageIndex}, #desc-${currentImageIndex}`, {
+        duration: 0,
+        x: 0,
+      });
     } else {
       isFirstRender.current = false;
     }
-  }, [currentImageIndex]);
-
-  useEffect(() => {
-    const tl = gsap.timeline({ repeat: 0 });
-    tl.from(`#brand-${currentImageIndex}, #desc-${currentImageIndex}`, {
-      duration: 0.75,
-      x: 150,
-      opacity: 0,
-      stagger: 0.2,
-    });
-
-    gsap.to(`#brand-${currentImageIndex}, #desc-${currentImageIndex}`, {
-      duration: 0,
-      x: 0,
-      opacity: 1,
-    });
-
-    isFirstRender.current = false;
   }, [currentImageIndex]);
 
   return (
@@ -65,7 +61,6 @@ export const NewCarousel = () => {
         loop={true}
         autoplay={{
           delay: 5000,
-          disableOnInteraction: false,
         }}
         pagination={{ clickable: true }}
         navigation={true}
@@ -86,17 +81,11 @@ export const NewCarousel = () => {
                 backgroundSize: "cover",
               }}
             >
-              <motion.article
-                initial={{ x: 150, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                transition={{ duration: 0.75 }}
-                id={`brand-${index}`}
-                className="absolute z-10 top-1/3"
-              >
+              <article id={`brand-${index}`} className="absolute z-10 top-1/3">
                 <p className="uppercase tracking-[15px] text-primary font-bold text-4xl">
                   {item.brand}
                 </p>
-              </motion.article>
+              </article>
               <span
                 id={`text-${index}`}
                 className={`${styles["large-text"]} ${styles.before}`}
@@ -104,7 +93,7 @@ export const NewCarousel = () => {
                 {item.name}
               </span>
               <figure className={styles["image-wrap"]}>
-                <div className="absolute bg-black bg-opacity-25 left-0 top-0 w-full h-full z-50" />
+                <div className="absolute bg-black bg-opacity-40 left-0 top-0 w-full h-full z-50" />
                 <Image
                   src={item.image}
                   alt={item.name}
@@ -118,17 +107,14 @@ export const NewCarousel = () => {
               >
                 {item.name}
               </span>
-              <motion.article
-                initial={{ x: 150, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                transition={{ duration: 0.75 }}
+              <article
                 id={`desc-${index}`}
                 className="absolute w-1/2 top-[55%] z-10"
               >
                 <p className="desc text-2xl text-center font-semibold text-gray-200">
                   {item.desc}
                 </p>
-              </motion.article>
+              </article>
             </div>
           </SwiperSlide>
         ))}
